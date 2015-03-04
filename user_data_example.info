@@ -1,0 +1,5 @@
+name = User data example
+description = An example of how to store complex data objects in user data.
+
+version = 7.x-1.0
+core = 7.x
