@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Module file for complex user data getter/setter.
+ */
+ 
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function user_data_example_entity_property_info_alter(&$info) {
+  $properties = &$info['user']['properties'];
+
+  $properties['employee_number'] = array(
+    'label' => t("Employee number"),
+    'description' => t("The employee number of this user."),
+    'type' => 'integer',
+    'getter callback' => 'my_custom_module_get_employee_number',
+    'setter callback' => 'my_custom_module_set_employee_number',
+  );
+}
+
+/**
+ * Entity API getter for user account employee number.
+ *
+ * @see user_data_example_entity_property_info_alter().
+ */
+function user_data_example_get_employee_number($account, array $options, $name, $entity_type) {
+  $employee_details = new EmployeeDetails($account);
+  return $employee_details->getEmployeeNumber();
+}
+
+/**
+ * Entity API setter for user account employee number.
+ *
+ * @see my_custom_module_entity_property_info_alter().
+ */
+function user_data_example_set_employee_number($account, $name, $value) {
+  $employee_details = new EmployeeDetails($account);
+  $employee_details->setEmployeeNumber($value);
+} 
